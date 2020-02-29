@@ -7,14 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import es.salesianos.connection.AbstractConnection;
-import es.salesianos.connection.H2Connection;
 import es.salesianos.model.Character;
 import es.salesianos.util.DbQueryConstants;
 @org.springframework.stereotype.Repository("characterRepository")
 public class CharacterRepository implements Repository<Character> {
 
-	protected AbstractConnection manager = new H2Connection();
+	@Autowired
+	protected AbstractConnection manager;
 
 	@Override
 	public void insert(Character character) {
@@ -111,7 +113,7 @@ public class CharacterRepository implements Repository<Character> {
 			throw new RuntimeException(e);
 		}
 	}
-	//se llama a este metodo cuando se selecciona un personaje para actualizarlo
+
 	@Override
 	public Character selectById(Integer idCharacter) {
 		Connection conn = manager.open(jdbcUrl);

@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page import="java.io.*,java.util.*,es.salesianos.model.*"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -27,7 +29,7 @@
 		<div class="card col-lg-4 col-md-6 col-7">
 			<div class="card-body">
 				<h4 class="card-title">Insertar personaje</h4>
-				<form action="insertCharacter" method="post">
+				<form:form action="insertCharacter" method="post">
 					<label>Nombre:</label> <input type="text" name="name"> <br />
 					<label>Portador:</label> <select
 						class="custom-select col-lg-6 col-md-6 col-6" name="carrier">
@@ -37,7 +39,7 @@
 					<br />
 					<input type="submit" class="btn btn-primary"
 						value="Insertar personaje">
-				</form>
+				</form:form>
 				<br />
 				<form action="listcharacters" method="post">
 					<input class="btn btn-success" type="submit"
@@ -49,10 +51,10 @@
 		<div class="card col-lg-4 col-md-6 col-7" style="height: fit-content;">
 			<div class="card-body">
 				<h4 class="card-title">Insertar raza</h4>
-				<form action="insertRace" method="post">
+				<form:form action="insertRace" method="post">
 					<label>Raza:</label> <input type="text" name="specie"><br />
 					<input class="btn btn-primary" type="submit" value="Insertar raza">
-				</form>
+				</form:form>
 				<br />
 				<form action="listraces" method="post">
 					<input class="btn btn-success" type="submit"

@@ -2,20 +2,22 @@ package es.salesianos.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
 import es.salesianos.model.Character;
 import es.salesianos.model.Race;
 import es.salesianos.service.Service;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:8080")
+@RequestMapping(value = "/api/v1")
 public class DeleteController {
-
-	@Autowired
-	ListController controller;
 	
 	@Autowired
 	@Qualifier("characterService")
@@ -25,15 +27,15 @@ public class DeleteController {
 	@Qualifier("raceService")
 	private Service<Race> raceService;
 	
-	@GetMapping("deleteCharacter")
-	protected ModelAndView deleteCharacter(@RequestParam("id") Integer idCharacter){
+	@GetMapping("/deleteCharacter")
+	protected ResponseEntity deleteCharacter(@RequestParam("id") Integer idCharacter){
 		characterService.delete(idCharacter);
-		return controller.listAllCharacters();
+		return new ResponseEntity(HttpStatus.OK);
 	}
 	
-	@GetMapping("deleteRace")
-	protected ModelAndView deleteRace(@RequestParam("id") Integer idRace){
+	@GetMapping("/deleteRace")
+	protected ResponseEntity deleteRace(@RequestParam("id") Integer idRace){
 		raceService.delete(idRace);
-		return controller.listAllRaces();
+		return new ResponseEntity(HttpStatus.OK);
 	}
 }

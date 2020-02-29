@@ -2,38 +2,41 @@ package es.salesianos.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
 import es.salesianos.model.Character;
 import es.salesianos.service.Service;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:8080")
+@RequestMapping(value = "/api/v1")
 public class UpdateController{
 	
 	@Autowired
-	ListController controller;
+	private ListController controller;
 	
 	@Autowired
 	@Qualifier("characterService")
-	Service<Character> service;
+	private Service<Character> service;
 
 	@GetMapping("/updateCharacter")
-	protected ModelAndView editCharacter(@RequestParam("id") Integer idCharacter) {
-		ModelAndView model = new ModelAndView("updateCharacter");
+	protected ResponseEntity editCharacter(@RequestParam("id") Integer idCharacter) {
 		Character character = service.listById(idCharacter);
-		model.addObject("character", character);
-		return model;
+		return new ResponseEntity(HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/updateCharacter")
-	protected ModelAndView updateCharacter(@ModelAttribute Character character) {
+	protected ResponseEntity<Character> updateCharacter(@RequestBody Character character) {
 		service.update(character);
-		return controller.listAllCharacters();
+		return new ResponseEntity<>(character, HttpStatus.CREATED);
 	}
 
 }

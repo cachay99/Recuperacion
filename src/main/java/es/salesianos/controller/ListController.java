@@ -4,15 +4,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import es.salesianos.model.Character;
 import es.salesianos.model.Race;
 import es.salesianos.service.Service;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:8080")
+@RequestMapping(value = "/api/v1")
 public class ListController{
 
 	@Autowired
@@ -24,19 +29,15 @@ public class ListController{
 	private Service<Race> raceService;
 
 	@PostMapping(path = "/listcharacters")
-	protected ModelAndView listAllCharacters() {
+	protected ResponseEntity<List<Character>> listAllCharacters() {
 		List<Character> characters = characterService.listAll();
-		ModelAndView model = new ModelAndView("ListCharacters");
-		model.addObject("listOfCharacters", characters);
-		return model;
+		return new ResponseEntity<>(characters, HttpStatus.OK);
 	}
 	
 	@PostMapping(path = "/listraces")
-	protected ModelAndView listAllRaces() {
+	protected ResponseEntity<List<Race>> listAllRaces() {
 		List<Race> races = raceService.listAll();
-		ModelAndView model = new ModelAndView("ListRaces");
-		model.addObject("listOfRaces", races);
-		return model;
+		return new ResponseEntity<>(races, HttpStatus.OK);
 	}
 	
 }

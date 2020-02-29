@@ -7,14 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import es.salesianos.connection.AbstractConnection;
-import es.salesianos.connection.H2Connection;
 import es.salesianos.model.Race;
 import es.salesianos.util.DbQueryConstants;
 @org.springframework.stereotype.Repository("raceRepository")
 public class RaceRepository implements Repository<Race>{
 
-	protected AbstractConnection manager = new H2Connection();
+	@Autowired
+	protected AbstractConnection manager;
 
 	@Override
 	public List<Race> listAll() {
